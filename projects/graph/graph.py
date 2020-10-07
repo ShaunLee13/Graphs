@@ -147,10 +147,9 @@ class Graph:
                 # finally for each neighbor we get back
                 for neighbor in neighbors:
                     # we'll use the path we are currently checking to create unique paths,
-                    # and append the neighbor to the ends of their corresponding copies
+                    # and append the    neighbor to the ends of their corresponding copies
                     # then add the clone to the end of our queue
-                    cp_clone = check_path.copy()
-                    cp_clone.append(neighbor)
+                    cp_clone = check_path + [neighbor]
                     path.enqueue(cp_clone)
 
     def dfs(self, starting_vertex, destination_vertex):
