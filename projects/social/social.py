@@ -1,3 +1,22 @@
+import random
+import math
+
+class Queue():
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, value):
+        self.queue.append(value)
+
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+
+    def size(self):
+        return len(self.queue)
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -29,24 +48,19 @@ class SocialGraph:
         self.friendships[self.last_id] = set()
 
     def populate_graph(self, num_users, avg_friendships):
-        """
-        Takes a number of users and an average number of friendships
-        as arguments
-
-        Creates that number of users and a randomly distributed friendships
-        between those users.
-
-        The number of users must be greater than the average number of friendships.
-        """
-        # Reset graph
         self.last_id = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
-
-        # Add users
-
-        # Create friendships
+        for i in range(0, num_users):
+            self.add_user(f"User {i}")
+        possible_friendships = []
+        for user_id in self.users:
+            for friend_id in range(user_id + 1, self.last_id + 1):
+                possible_friendships.append((user_id, friend_id))
+        random.shuffle(possible_friendships)
+        for i in range(0, math.floor(num_users * avg_friendships / 2)):
+            friendship = possible_friendships[i]
+            self.add_friendship(friendship[0], friendship[1])
 
     def get_all_social_paths(self, user_id):
         """
@@ -58,7 +72,31 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        # Create our queue, and add our starting node to it
+        q = Queue()
+        q.enqueue([user_id])
+
+        # As long as we have items in our queue
+        while q.size() > 0:
+            # dequeue our current path and get our user node from it
+            path = q.dequeue()
+            user = path[-1]
+
+            # if we haven't visited this users list
+            # we want to use our visited dict, with the id as key and path as value
+            if user not in visited:
+                visited[user] = path
+
+                # then access the friends list for this user
+                # and add each friend to our queue
+                friend_list = self.friendships[user]
+
+                for friend in friend_list:
+                    path_copy = path.copy()
+                    path_copy.append(friend)
+
+                    q.enqueue(path_copy)
+        
         return visited
 
 
