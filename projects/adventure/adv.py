@@ -52,32 +52,32 @@ while len(visited) < len(room_graph):
         # We want to add our current room as visited
         # and set our previous room as the last room in our backtrack list
         visited[player.current_room.id] = player.current_room.get_exits()
-        previousRoom = bt[-1]
+        previous_room = bt[-1]
 
         # Then we can remove our previous room as one of the possible exits we can go down
-        visited[player.current_room.id].remove(previousRoom)
+        visited[player.current_room.id].remove(previous_room)
 
     # once the current room has been visited
     # and if we have exits left to visit
     elif len(visited[player.current_room.id]) > 0:
         # We'll pop off the next room we'll visit and add it to the path we're traversing over
-        nextRoom = visited[player.current_room.id].pop()
-        traversal_path.append(nextRoom)
+        next_room = visited[player.current_room.id].pop()
+        traversal_path.append(next_room)
 
         # For our backtracking, we'll add the opposite direction of where our next room is going.
         # Then, we'll move to the next room and do checks on it
-        bt.append(opps[nextRoom])
-        player.travel(nextRoom)
+        bt.append(opps[next_room])
+        player.travel(next_room)
 
     # If we've iterated over all of our current room's exits
     elif len(visited[player.current_room.id]) == 0:
         # We'll grab our previous room from our backtrack
-        previousRoom = bt.pop()
+        previous_room = bt.pop()
 
         # Then we'll add it to our path we've traversed over
         # and travel back to it
-        traversal_path.append(previousRoom)
-        player.travel(previousRoom)
+        traversal_path.append(previous_room)
+        player.travel(previous_room)
 
 
 # TRAVERSAL TEST
