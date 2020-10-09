@@ -52,7 +52,7 @@ while len(visited) < len(room_graph):
         # We want to add our current room as visited
         # and set our previous room as the last room in our backtrack list
         visited[player.current_room.id] = player.current_room.get_exits()
-        previousRoom = bt[-1]
+        previousRoom = bt.pop()
 
         # Then we can remove our previous room as one of the possible exits we can go down
         visited[player.current_room.id].remove(previousRoom)
