@@ -90,7 +90,7 @@ for move in traversal_path:
     visited_rooms.add(player.current_room)
 
 if len(visited_rooms) == len(room_graph):
-    print(f"TESTS PASSED: {len(traversal_path)} moves, {len(visited_rooms)} rooms visited")
+    print(f"TESTS PASSED: {len(traversal_path)} moves, {len(visited_rooms)} rooms visited, path taken: {traversal_path}")
 else:
     print("TESTS FAILED: INCOMPLETE TRAVERSAL")
     print(f"{len(room_graph) - len(visited_rooms)} unvisited rooms")
